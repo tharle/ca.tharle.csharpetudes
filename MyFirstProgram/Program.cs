@@ -1,20 +1,16 @@
 ﻿using System;
+using MyUtilities;
 
 namespace MyFirstProgram
 {
-    class Temperature 
-    {
-        public static float FahrenheiToCelsius(float temperatureF)
-        {
-            return (temperatureF - 32) / 1.8f;
-        }
-    }
-    class Program
+    class CheckConfort
     {
         
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World! " + Temperature.FahrenheiToCelsius(350));
+            Console.WriteLine("Where should we go in May?");
+            WeatherUtilities.Report("San Francisco", WeatherUtilities.FahrenheiToCelsius(65), 73);
+            WeatherUtilities.Report("Québec", 23, 80); 
         }
     }
 }
