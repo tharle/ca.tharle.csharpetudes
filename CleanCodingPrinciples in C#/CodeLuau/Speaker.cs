@@ -30,10 +30,7 @@ namespace CodeLuau
 			int? speakerId = null;
 
             var error = ValidateData();
-            if (error != null) 
-            {
-                return new RegisterResponse(error);
-            }
+            if (error != null) return new RegisterResponse(error);
 
             //put list of employers in array
             var emps = new List<string>() { "Pluralsight", "Microsoft", "Google" };
