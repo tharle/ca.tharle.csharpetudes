@@ -35,28 +35,9 @@ namespace CodeLuau
             bool speakerAppearsQualified = AppersExceptional() || !HasObviousRedFlag();
 
             if (!speakerAppearsQualified) return new RegisterResponse(RegisterError.SpeakerDoesNotMeetStandards);
+            bool atLeastOneSessionApproved = ApproveSessions();
 
-            bool approved = false;            
-            var ot = new List<string>() { "Cobol", "Punch Cards", "Commodore", "VBScript" };
-            foreach (var session in Sessions)
-            {
-                foreach (var tech in ot)
-                {
-                    if (session.Title.Contains(tech) || session.Description.Contains(tech))
-                    {
-                        session.Approved = false;
-                        break;
-                    }
-                    else
-                    {
-                        session.Approved = true;
-                        approved = true;
-                    }
-                }
-            }
-            
-
-            if (approved)
+            if (atLeastOneSessionApproved)
             {
                 //if we got this far, the speaker is approved
                 //let's go ahead and register him/her now.
@@ -98,9 +79,33 @@ namespace CodeLuau
             {
                 return new RegisterResponse(RegisterError.NoSessionsApproved);
             }
-            
+
             //if we got this far, the speaker is registered.
             return new RegisterResponse((int)speakerId);
+        }
+
+        private bool ApproveSessions()
+        {   
+            foreach (var session in Sessions)
+            {
+                session.Approved = !SessionIsAboutOldTechnology(session);
+            }
+
+            return Sessions.Any(s => s.Approved);
+        }
+
+        private Boolean SessionIsAboutOldTechnology(Session session) 
+        {
+            var oldTechnologies = new List<string>() { "Cobol", "Punch Cards", "Commodore", "VBScript" };
+            foreach (var tech in oldTechnologies)
+            {
+                if (session.Title.Contains(tech) || session.Description.Contains(tech))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private bool HasObviousRedFlag()
