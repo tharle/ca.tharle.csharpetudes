@@ -57,10 +57,6 @@ namespace ACM.BLTest
 
         }
 
-        // Arrange
-        // Act
-        // Assert
-
         [Fact]
         public void ValidateValid() 
         {
