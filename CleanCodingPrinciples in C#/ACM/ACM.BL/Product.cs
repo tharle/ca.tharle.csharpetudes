@@ -27,36 +27,5 @@ namespace ACM.BL
             if (CurrentPrice == null || CurrentPrice < 0) return false;
             return true;
         }
-
-        /// <summary>
-        /// Retrive one product by Id
-        /// </summary>
-        /// <param name="productId"></param>
-        /// <returns></returns>
-        public Product Retrive(int productId)
-        {
-            // Code that retrives the defined product
-            return new Product();
-        }
-
-        /// <summary>
-        /// Retrive all products
-        /// </summary>
-        /// <returns></returns>
-        public List<Product> Retrive()
-        {
-            // Code that retrives all of the products
-            return new List<Product>();
-        }
-
-        /// <summary>
-        /// Saves the current product
-        /// </summary>
-        /// <returns></returns>
-        public bool Save()
-        {
-            // Code that saves the defined product
-            return true;
-        }
     }
 }
