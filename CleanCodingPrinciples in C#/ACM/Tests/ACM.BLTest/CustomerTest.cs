@@ -4,10 +4,10 @@ using ACM.BL;
 
 namespace ACM.BLTest
 {
-    public class UnitTest1
+    public class CustomerTest
     {
         [Fact]
-        public void Test1()
+        public void FullNameTestValid()
         {
             // Arrange
             Customer customer = new Customer { FirstName = "Bilbo", LastName = "Baggins" };
