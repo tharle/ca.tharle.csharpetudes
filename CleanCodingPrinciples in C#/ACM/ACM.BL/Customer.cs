@@ -7,7 +7,17 @@ namespace ACM.BL
         public int CustomerId { get; private set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string FullName { get => $"{LastName}, {FirstName}"; }
+        public string FullName { 
+            get {
+                string fullName = LastName;
+                if (!string.IsNullOrWhiteSpace(FirstName)) 
+                {
+                    if (!string.IsNullOrWhiteSpace(LastName)) fullName += ", ";
+                    fullName += FirstName;
+                }
+                return fullName;
+            } 
+        }
         public string EmailAddress { get; set; }
     }
 }
