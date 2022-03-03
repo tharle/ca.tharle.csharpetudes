@@ -10,7 +10,7 @@ namespace ACM.BLTest
         public void FullNameTestValid()
         {
             // Arrange
-            Customer customer = new Customer { FirstName = "Bilbo", LastName = "Baggins" };
+            var customer = new Customer { FirstName = "Bilbo", LastName = "Baggins" };
             string expected = "Baggins, Bilbo";
             // Act
             string actual = customer.FullName;
@@ -22,7 +22,7 @@ namespace ACM.BLTest
         public void FullNameFirstNameEmpty()
         {
             // Arrange
-            Customer customer = new Customer { LastName = "Baggins" };
+            var customer = new Customer { LastName = "Baggins" };
             string expected = "Baggins";
             // Act
             string actual = customer.FullName;
@@ -34,12 +34,27 @@ namespace ACM.BLTest
         public void FullNameLastNameEmpty()
         {
             // Arrange
-            Customer customer = new Customer { FirstName = "Bilbo"};
+            var customer = new Customer { FirstName = "Bilbo"};
             string expected = "Bilbo";
             // Act
             string actual = customer.FullName;
             // Assert
             Assert.Equal(expected, actual);
+        }
+
+        [Fact]
+        public void StaticTest () {
+            // Arrange
+            var c1 = new Customer { FirstName = "Bilbo" };
+            Customer.InstanceCount++;
+            var c2 = new Customer { FirstName = "Frodo" };
+            Customer.InstanceCount++;
+            var c3 = new Customer { FirstName = "Rosie" };
+            Customer.InstanceCount++;
+            // Act
+            // Assert
+            Assert.Equal(3, Customer.InstanceCount);
+
         }
     }
 }
