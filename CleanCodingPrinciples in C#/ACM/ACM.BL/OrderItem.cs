@@ -8,10 +8,11 @@ namespace ACM.BL
 {
     public class OrderItem
     {
+        public OrderItem(){}
         public int OrderItemId { get; private set; }
-        public Product Product { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
-        public float PurchasePrice { get; set; }
+        public Decimal? PurchasePrice { get; set; }
 
         /// <summary>
         /// Validates the orderItem data
@@ -19,9 +20,9 @@ namespace ACM.BL
         /// <returns></returns>
         public bool Validate()
         {
-            if (Product == null) return false;
+            if (ProductId <= 0) return false;
             if (Quantity <= 0) return false;
-            if (PurchasePrice < 0) return false;
+            if (PurchasePrice == null || PurchasePrice < 0) return false;
 
             return true;
         }

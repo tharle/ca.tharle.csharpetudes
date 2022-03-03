@@ -12,9 +12,9 @@ namespace ACM.BLTest
             // Arrange
             var orderItem = new OrderItem()
             {
-                Product = new Product(),
+                ProductId = 5893,
                 Quantity = 1,
-                PurchasePrice = 5.8f
+                PurchasePrice = new Decimal(5.8)
 
             };
             // Assert
@@ -28,7 +28,7 @@ namespace ACM.BLTest
             var orderItem = new OrderItem()
             {
                 Quantity = 1,
-                PurchasePrice = 5.8f
+                PurchasePrice = new Decimal(5.8)
 
             };
             // Assert
@@ -41,8 +41,22 @@ namespace ACM.BLTest
             // Arrange
             var orderItem = new OrderItem()
             {
-                Product = new Product(),
-                PurchasePrice = 5.8f
+                ProductId = 5893,
+                PurchasePrice = new Decimal(5.8)
+
+            };
+            // Assert
+            Assert.False(orderItem.Validate(), "That test should be invalid");
+        }
+
+        [Fact]
+        public void ValidateMissingPurchasePrice()
+        {
+            // Arrange
+            var orderItem = new OrderItem()
+            {
+                ProductId = 5893,
+                Quantity = 1
 
             };
             // Assert
@@ -55,9 +69,9 @@ namespace ACM.BLTest
             // Arrange
             var orderItem = new OrderItem()
             {
-                Product = new Product(),
+                ProductId = 5893,
                 Quantity = 1,
-                PurchasePrice = -3.5f
+                PurchasePrice = new Decimal(-3.5f) 
 
             };
             // Assert

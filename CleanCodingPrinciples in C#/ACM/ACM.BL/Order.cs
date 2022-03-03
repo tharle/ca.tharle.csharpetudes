@@ -8,8 +8,10 @@ namespace ACM.BL
 {
     public class Order
     {
+        public Order() { }
+        public Order(int orderId) { OrderId = orderId; }
         public int OrderId { get; private set; }
-        public DateTime OrderDate { get; set; }
+        public DateTimeOffset? OrderDate { get; set; }
 
 
         /// <summary>
@@ -18,7 +20,7 @@ namespace ACM.BL
         /// <returns></returns>
         public bool Validate()
         {
-            if (DateTime.Equals(OrderDate, DateTime.MinValue)) return false;
+            if (OrderDate == null) return false;
             return true;
         }
 
