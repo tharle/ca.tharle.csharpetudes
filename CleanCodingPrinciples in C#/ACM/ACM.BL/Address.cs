@@ -17,7 +17,7 @@ namespace ACM.BL
         public string StateProvince { get; set; }
         public string PostalCode { get; set; }
         public string Country { get; set; }
-        public string AddressType { get; set; }
+        public int AddressType { get; set; }
 
         public bool Validate() {
             if (String.IsNullOrWhiteSpace(streetLine1) && String.IsNullOrWhiteSpace(streetLine2)) return false;

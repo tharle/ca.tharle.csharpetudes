@@ -22,6 +22,7 @@ namespace ACM.BLTest
             Assert.Equal(expected.CustomerId, actual.CustomerId);
             Assert.Equal(expected.EmailAddress, actual.EmailAddress);
             Assert.Equal(expected.FullName, actual.FullName);
+            Assert.Equal(2, actual.Addresses.Count);
         }
 
         [Fact]
