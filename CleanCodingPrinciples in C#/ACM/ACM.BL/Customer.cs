@@ -33,6 +33,8 @@ namespace ACM.BL
         public string EmailAddress { get; set; }
         public List<Address> Addresses { get; set; }
 
+        public override string ToString() => FullName;
+
         /// <summary>
         /// Validates the customer data
         /// </summary>
