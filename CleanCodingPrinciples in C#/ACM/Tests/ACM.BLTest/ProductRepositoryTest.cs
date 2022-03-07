@@ -34,5 +34,38 @@ namespace ACM.BLTest
 
             Assert.Null(actual);
         }
+
+        [Fact]
+        public void SaveTestValid() 
+        {
+            var repository = new ProductRepository();
+            var updatedProduct = new Product(2)
+            {
+                ProductName = "SunFlowers",
+                Description = "Assorted Size Set of 4 Bright Yellow Mini Sunflowers.",
+                CurrentPrice = 18m,
+                HasChanges = true
+            };
+
+            var actual = repository.Save(updatedProduct);
+
+            Assert.True(actual);
+        }
+
+        [Fact]
+        public void SaveTestMissingName()
+        {
+            var repository = new ProductRepository();
+            var updatedProduct = new Product(2)
+            {
+                Description = "Assorted Size Set of 4 Bright Yellow Mini Sunflowers.",
+                CurrentPrice = 18m,
+                HasChanges = true,
+            };
+
+            var actual = repository.Save(updatedProduct);
+
+            Assert.False(actual);
+        }
     }
 }
