@@ -12,7 +12,7 @@ namespace Acme.CommonTest
             var source = "SonicTheHedgehog";
             
             var expected = "Sonic The Hedgehog";
-            var actual = StringHandler.InsertSpaces(source);
+            var actual = source.InsertSpaces();
 
             Assert.Equal(expected, actual);
         }
@@ -23,7 +23,7 @@ namespace Acme.CommonTest
             var source = "Sonic TheHedgehog";
 
             var expected = "Sonic The Hedgehog";
-            var actual = StringHandler.InsertSpaces(source);
+            var actual = source.InsertSpaces();
 
             Assert.Equal(expected, actual);
         }
