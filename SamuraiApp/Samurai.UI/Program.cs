@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Samurai.UI
+namespace SamuraiApp.UI
 {
     class Program
     {
