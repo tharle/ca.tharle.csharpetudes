@@ -4,9 +4,10 @@ get-help entityframework -- show all dispo commands
 
 add-migration init -- initiates the Data Base (using the models as a base)
 
-script-migration -- create the script for migration
+script-migration -- create the script for migration (i think is for sql)
 
 update-database -verbose -- use the last created script migration for update the data base
 
-add-migration manytomanysimple -- generete an script for migration with the many-to-many simplified (you will need to update the base after that)
+add-migration manytomanysimple [name/alias for migration] -- update the migration scripts
 
+get-migration  -- show an list of all migrations
