@@ -15,7 +15,8 @@ namespace SamuraiApp.UI
             _context.Database.EnsureCreated();
             // AddSamuraiByName("Shimada", "Okamoto", "Kikuchio", "Hyashida");
             // GetSamurais("After Add: ");
-            QueryFilters("S");
+            //GetFirstSamuraiByNameLike("S");
+            GetSamuraiById(1);
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -40,7 +41,7 @@ namespace SamuraiApp.UI
             }
         }
 
-        private static void QueryFilters(String name)
+        private static void GetSamuraisByNameLike(String name)
         {
             // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
             var samurais = _context.Samurais.Where(s => EF.Functions.Like(s.Name, $"{name}%")).ToList();
@@ -50,5 +51,21 @@ namespace SamuraiApp.UI
                 Console.WriteLine(samurai.Name);
             }
         }
+
+        private static void GetFirstSamuraiByNameLike(String name)
+        {
+            // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
+            var samurai = _context.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
+            Console.WriteLine(samurai.Name);
+        }
+
+        private static void GetSamuraiById(int idSamurai)
+        {
+            // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
+            var samurai = _context.Samurais.Find(idSamurai);
+            Console.WriteLine(samurai.Name);
+        }
+
+        
     }
 }
