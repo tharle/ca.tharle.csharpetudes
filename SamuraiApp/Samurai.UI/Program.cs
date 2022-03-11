@@ -2,6 +2,7 @@
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SamuraiApp.UI
@@ -14,11 +15,13 @@ namespace SamuraiApp.UI
         {
             _context.Database.EnsureCreated();
             // AddSamuraiByName("Shimada", "Okamoto", "Kikuchio", "Hyashida");
+            // AddBattles("Battle of Nagashino", "Battle of Anegawa");
             // GetSamurais("");
             // GetFirstSamuraiByNameLike("S");
             // GetSamuraiById(1);
             // RetriveAndUpdateSamurai(1, "-san");
             // RetriveAndUpdateMultiplesSamurai("-san");
+            QueryAndUpdateBattles_Disconnected(new DateTime(1570, 01, 01), new DateTime(1570, 12, 01));
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -30,6 +33,17 @@ namespace SamuraiApp.UI
                 _context.Samurais.Add(new Samurai{ Name = name });
             }
             
+            _context.SaveChanges();
+        }
+        private static void AddBattles(params string[] names)
+        {
+            var battles = new List<Battle>();
+            foreach (var name in names)
+            {
+                battles.Add(new Battle { Name = name });
+            }
+            _context.Battles.AddRange(battles);
+
             _context.SaveChanges();
         }
         private static void GetSamurais(string text)
@@ -93,6 +107,25 @@ namespace SamuraiApp.UI
             var samurai = _context.Samurais.Find(idSamurai);
             _context.Samurais.Remove(samurai);
 
+        }
+        private static void QueryAndUpdateBattles_Disconnected(DateTime startDateBattle, DateTime endDateBattle) 
+        {
+            List<Battle> disconnectedBattles;
+            using (var context1 = new SamuraiContext())
+            {
+                disconnectedBattles = _context.Battles.ToList();
+            } // context1 is disposed
+
+            disconnectedBattles.ForEach(b =>
+                {
+                    b.StartDate = startDateBattle;
+                    b.EndDate = endDateBattle;
+                });
+            using (var context2 = new SamuraiContext()) 
+            {
+                context2.UpdateRange(disconnectedBattles);
+                context2.SaveChanges();
+            }
         }
 
     }
