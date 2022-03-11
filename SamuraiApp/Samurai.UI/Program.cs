@@ -10,18 +10,19 @@ namespace SamuraiApp.UI
     class Program
     {
         private static SamuraiContext _context = new SamuraiContext();
+        private static SamuraiContextNoTracking _contextNT = new SamuraiContextNoTracking();
 
         private static void Main(string[] args)
         {
             _context.Database.EnsureCreated();
             // AddSamuraiByName("Shimada", "Okamoto", "Kikuchio", "Hyashida");
             // AddBattles("Battle of Nagashino", "Battle of Anegawa");
-            // GetSamurais("");
-            // GetFirstSamuraiByNameLike("S");
-            // GetSamuraiById(1);
+            GetSamurais("");
+            GetFirstSamuraiByNameLike("S");
+            GetSamuraiById(1);
             // RetriveAndUpdateSamurai(1, "-san");
             // RetriveAndUpdateMultiplesSamurai("-san");
-            QueryAndUpdateBattles_Disconnected(new DateTime(1570, 01, 01), new DateTime(1570, 12, 01));
+            // QueryAndUpdateBattles_Disconnected(new DateTime(1570, 01, 01), new DateTime(1570, 12, 01));
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -48,7 +49,8 @@ namespace SamuraiApp.UI
         }
         private static void GetSamurais(string text)
         {
-            var samurais = _context.Samurais.ToList();
+            // var samurais = _context.Samurais.ToList();
+            var samurais = _contextNT.Samurais.ToList();
             Console.WriteLine($"{text}: Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
@@ -68,13 +70,15 @@ namespace SamuraiApp.UI
         private static void GetFirstSamuraiByNameLike(String name)
         {
             // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
-            var samurai = _context.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
+            //var samurai = _context.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
+            var samurai = _contextNT.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
             Console.WriteLine(samurai.Name);
         }
         private static void GetSamuraiById(int idSamurai)
         {
             // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
-            var samurai = _context.Samurais.Find(idSamurai);
+            // var samurai = _context.Samurais.Find(idSamurai);
+            var samurai = _contextNT.Samurais.Find(idSamurai);
             Console.WriteLine(samurai.Name);
         }
         private static void RetriveAndUpdateSamurai(int idSamurai, string prefixName)
