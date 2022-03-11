@@ -14,11 +14,11 @@ namespace SamuraiApp.UI
         {
             _context.Database.EnsureCreated();
             // AddSamuraiByName("Shimada", "Okamoto", "Kikuchio", "Hyashida");
-            // GetSamurais("After Add: ");
+            // GetSamurais("");
             // GetFirstSamuraiByNameLike("S");
             // GetSamuraiById(1);
             // RetriveAndUpdateSamurai(1, "-san");
-            RetriveAndUpdateMultiplesSamurai("-san");
+            // RetriveAndUpdateMultiplesSamurai("-san");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -38,7 +38,7 @@ namespace SamuraiApp.UI
             Console.WriteLine($"{text}: Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
-                Console.WriteLine(samurai.Name);
+                Console.WriteLine($"({samurai.Id}) - {samurai.Name}");
             }
         }
         private static void GetSamuraisByNameLike(String name)
@@ -69,7 +69,6 @@ namespace SamuraiApp.UI
             verifyAndModifySamuraiPrefixName(samurai, prefixName);
             _context.SaveChanges();
         }
-
         private static void verifyAndModifySamuraiPrefixName(Samurai samurai, string prefixName)
         {
             if (samurai.Name.Contains(prefixName))
@@ -89,7 +88,12 @@ namespace SamuraiApp.UI
             samurais.ForEach(s => verifyAndModifySamuraiPrefixName(s, prefixName));
             _context.SaveChanges();
         }
+        private static void RetriveAndDeleteASamuraiById(int idSamurai) 
+        {
+            var samurai = _context.Samurais.Find(idSamurai);
+            _context.Samurais.Remove(samurai);
 
+        }
 
     }
 }
