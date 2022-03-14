@@ -26,6 +26,7 @@ namespace SamuraiApp.UI
             // InsertNewSamuraiWithAQuote();
             // AddQuoteToExistingSamuraiWhileTracked(1, "I bet you're happy that I've saved you!");
             // Simpler_AddQuoteToExistingSamuraiNotTracked(1, "Thaks for dinner!");
+            EagerLoadSamuraiWithQuotes();
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -177,5 +178,20 @@ namespace SamuraiApp.UI
             newContext.Quotes.Add(quote);
             newContext.SaveChanges();
         }
+        private static void printSamurais(List<Samurai> samurais)
+        {
+            samurais.ForEach(s => Console.WriteLine(s.printSamurai()));
+        }
+        private static void EagerLoadSamuraiWithQuotes() {
+            //var samurais = _context.Samurais.Include(s => s.Quotes).ToList();
+            // -- Filtered Include Query
+            var samurais = _context.Samurais
+                .Where(s => s.Name.Contains("Tharle"))
+                .Include(s => s.Quotes.Where(q => q.Text.Contains("Thanks"))).ToList();
+            printSamurais(samurais);
+            
+        }
+
+        
     }
 }
