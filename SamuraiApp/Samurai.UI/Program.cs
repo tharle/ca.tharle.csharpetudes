@@ -17,12 +17,15 @@ namespace SamuraiApp.UI
             _context.Database.EnsureCreated();
             // AddSamuraiByName("Shimada", "Okamoto", "Kikuchio", "Hyashida");
             // AddBattles("Battle of Nagashino", "Battle of Anegawa");
-            GetSamurais("");
-            GetFirstSamuraiByNameLike("S");
-            GetSamuraiById(1);
+            // GetSamurais("");
+            // GetFirstSamuraiByNameLike("S");
+            // GetSamuraiById(1);
             // RetriveAndUpdateSamurai(1, "-san");
             // RetriveAndUpdateMultiplesSamurai("-san");
             // QueryAndUpdateBattles_Disconnected(new DateTime(1570, 01, 01), new DateTime(1570, 12, 01));
+            // InsertNewSamuraiWithAQuote();
+            // AddQuoteToExistingSamuraiWhileTracked(1, "I bet you're happy that I've saved you!");
+            // Simpler_AddQuoteToExistingSamuraiNotTracked(1, "Thaks for dinner!");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -132,5 +135,47 @@ namespace SamuraiApp.UI
             }
         }
 
+        private static void InsertNewSamuraiWithAQuote()
+        {
+            var samurai = new Samurai
+            {
+                Name = "Kambei Shimada",
+                Quotes = new List<Quote>
+                {
+                    new Quote { Text = "I've come to save you"}
+                }
+            };
+
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+        private static void InsertNewSamuraiWithManyQuotes()
+        {
+            var samurai = new Samurai
+            {
+                Name = "Kyuzo",
+                Quotes = new List<Quote>
+                {
+                    new Quote { Text = "Wath out for my sharp sword!"},
+                    new Quote { Text = "I told you to wath out for the sharp sword! Oh well!"}
+                }
+            };
+
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+        private static void AddQuoteToExistingSamuraiWhileTracked(int idSamurai, string quoteText)
+        {
+            var samurai = _context.Samurais.Find(idSamurai);
+            samurai.Quotes.Add(new Quote { Text = quoteText });
+            _context.SaveChanges();
+        }
+        private static void Simpler_AddQuoteToExistingSamuraiNotTracked(int idSamurai, string quoteText)
+        {
+            var quote = new Quote { Text = quoteText, SamuraiId = idSamurai };
+            using var newContext = new SamuraiContext();
+            newContext.Quotes.Add(quote);
+            newContext.SaveChanges();
+        }
     }
 }
