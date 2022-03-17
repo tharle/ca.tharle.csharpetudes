@@ -34,8 +34,8 @@ namespace SamuraiApp.UI
             // ModifyRelatedDataWhenNotTracked(9, " Did you hear that again?");
             // AddingNewSamuraiToAnExistingBattle("Takeda Shingen");
             // ReturnBattleWithSamurais();
-            AddAllSamuraisToAllBattles();
-
+            // AddAllSamuraisToAllBattles();
+            // RemoveSamuraiFromABattle(12, 1);
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -264,6 +264,21 @@ namespace SamuraiApp.UI
             }
             _context.SaveChanges();
         }
-
+        private static void RemoveSamuraiFromABattle(int idSamurai, int idBattle)
+        {
+            var battleWithSamurai = _context.Battles
+                .Include(b => b.Samurais.Where(s => s.Id == idSamurai))
+                .Single(b => b.Id == idBattle);
+            var samurai = battleWithSamurai.Samurais[0];
+            battleWithSamurai.Samurais.Remove(samurai);
+            _context.SaveChanges();
+            
+        }
+        private static void ThatWillNotRemoveSamuraiFromABattle(int idSamurai, int idBattle) {
+            var battle = _context.Battles.Find(2);
+            var samurai = _context.Samurais.Find(12);
+            battle.Samurais.Remove(samurai);
+            _context.SaveChanges();// the relationship is not being tracked
+        }
     }
 }
