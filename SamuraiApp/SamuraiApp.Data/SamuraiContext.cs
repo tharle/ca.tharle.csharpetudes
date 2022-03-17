@@ -28,7 +28,7 @@ namespace SamuraiApp.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<Samurai>()
+            modelBuilder.Entity<Samurai>()
                 .HasMany(s => s.Battles)
                 .WithMany(b => b.Samurais)
                 .UsingEntity<BattleSamurai>
@@ -37,7 +37,7 @@ namespace SamuraiApp.Data
                     bs => bs.HasOne<Samurai>().WithMany()
                 )
                 .Property(bs => bs.DateJoined)
-                .HasDefaultValueSql("getdate()");*/
+                .HasDefaultValueSql("getdate()");
                 
         }
     }
