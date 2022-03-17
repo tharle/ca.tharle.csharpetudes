@@ -32,6 +32,10 @@ namespace SamuraiApp.UI
             // FiteringWithRelatedData("save");
             // ModifyRelatedDataWhenTracked(9, "Did you hear that?");
             // ModifyRelatedDataWhenNotTracked(9, " Did you hear that again?");
+            // AddingNewSamuraiToAnExistingBattle("Takeda Shingen");
+            // ReturnBattleWithSamurais();
+            AddAllSamuraisToAllBattles();
+
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -235,6 +239,31 @@ namespace SamuraiApp.UI
             newContext.Entry(quote).State = EntityState.Modified;// that single line will just update for that object, ignoring others relates objects in quota.
             newContext.SaveChanges();
         }
-        
+        private static void AddingNewSamuraiToAnExistingBattle(string samuraiName)
+        {
+            var battle = _context.Battles.FirstOrDefault();
+            battle.Samurais.Add(new Samurai { Name = samuraiName });
+            _context.SaveChanges();
+        }
+        private static void ReturnBattleWithSamurais()
+        {
+            var battle = _context.Battles.Include(b => b.Samurais).FirstOrDefault();
+        }
+        private static void ReturnAllBattlesWithSamurais()
+        {
+            var battle = _context.Battles.Include(b => b.Samurais).ToList();
+        }
+        private static void AddAllSamuraisToAllBattles()
+        {
+            var battles = _context.Battles.Include(b=>b.Samurais).ToList();
+            var samurais = _context.Samurais.ToList();
+
+            foreach (var battle in battles)
+            {
+                battle.Samurais.AddRange(samurais);
+            }
+            _context.SaveChanges();
+        }
+
     }
 }
