@@ -29,7 +29,9 @@ namespace SamuraiApp.UI
             // EagerLoadSamuraiWithQuotes();
             // AddHorseToSamurai(1, "Pé de pano");
             // ExplicitLoadQuotes(1);
-            FiteringWithRelatedData("save");
+            // FiteringWithRelatedData("save");
+            // ModifyRelatedDataWhenTracked(9, "Did you hear that?");
+            // ModifyRelatedDataWhenNotTracked(9, " Did you hear that again?");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -213,7 +215,26 @@ namespace SamuraiApp.UI
                 .ToList();
             printSamurais(samurais);
         }
+        private static void ModifyRelatedDataWhenTracked(int idSamurai, string newQuotaText)
+        {
+            var samurai = _context.Samurais.Include(s => s.Quotes)
+                .FirstOrDefault(s => s.Id == idSamurai);
+            var quote = samurai.Quotes[0];
+            quote.Text = newQuotaText;
+            _context.SaveChanges();
+        }
+        private static void ModifyRelatedDataWhenNotTracked(int idSamurai, string newQuotaText)
+        {
+            var samurai = _context.Samurais.Include(s => s.Quotes)
+                .FirstOrDefault(s => s.Id == idSamurai);
+            var quote = samurai.Quotes[0];
+            quote.Text = newQuotaText;
 
+            using var newContext = new SamuraiContext();
+            // newContext.Quotes.Update(quote); // That will make an update for all objects Related that Quota (Samurai [others samurai's quotes])
+            newContext.Entry(quote).State = EntityState.Modified;// that single line will just update for that object, ignoring others relates objects in quota.
+            newContext.SaveChanges();
+        }
         
     }
 }
