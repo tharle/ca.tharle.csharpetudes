@@ -36,6 +36,7 @@ namespace SamuraiApp.UI
             // ReturnBattleWithSamurais();
             // AddAllSamuraisToAllBattles();
             // RemoveSamuraiFromABattle(12, 1);
+            // RemoveSamuraiFromABattleExplicit(10, 1);
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -279,6 +280,17 @@ namespace SamuraiApp.UI
             var samurai = _context.Samurais.Find(12);
             battle.Samurais.Remove(samurai);
             _context.SaveChanges();// the relationship is not being tracked
+        }
+        private static void RemoveSamuraiFromABattleExplicit(int idSamurai, int idBattle)
+        {
+            var b_s = _context.Set<BattleSamurai>()
+                .SingleOrDefault(bs => bs.BattleId == idBattle && bs.SamuraiId == idSamurai);
+
+            if(b_s != null)
+            {
+                _context.Remove(b_s); // _context.Set<BattleSamurai>().Remove [works, too]
+                _context.SaveChanges();
+            }
         }
     }
 }
