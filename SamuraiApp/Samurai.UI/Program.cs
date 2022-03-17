@@ -26,7 +26,10 @@ namespace SamuraiApp.UI
             // InsertNewSamuraiWithAQuote();
             // AddQuoteToExistingSamuraiWhileTracked(1, "I bet you're happy that I've saved you!");
             // Simpler_AddQuoteToExistingSamuraiNotTracked(1, "Thaks for dinner!");
-            EagerLoadSamuraiWithQuotes();
+            // EagerLoadSamuraiWithQuotes();
+            // AddHorseToSamurai(1, "Pé de pano");
+            // ExplicitLoadQuotes(1);
+            FiteringWithRelatedData("save");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -135,7 +138,6 @@ namespace SamuraiApp.UI
                 context2.SaveChanges();
             }
         }
-
         private static void InsertNewSamuraiWithAQuote()
         {
             var samurai = new Samurai
@@ -190,6 +192,26 @@ namespace SamuraiApp.UI
                 .Include(s => s.Quotes.Where(q => q.Text.Contains("Thanks"))).ToList();
             printSamurais(samurais);
             
+        }
+        private static void AddHorseToSamurai(int idSamurai, string nameHorse) 
+        {
+            _context.Set<Horse>().Add(new Horse { SamuraiId = idSamurai, Name = nameHorse });
+            _context.SaveChanges();
+            _context.ChangeTracker.Clear();
+        }
+        private static void ExplicitLoadQuotes(int idSamurai) 
+        {
+            var samurai = _context.Samurais.Find(idSamurai);
+            _context.Entry(samurai).Collection(s => s.Quotes).Load(); // Collection
+            _context.Entry(samurai).Reference(s => s.Horse).Load(); // Single reference
+            Console.WriteLine(samurai.printSamurai());
+        }
+        private static void FiteringWithRelatedData(string Text)
+        {
+            var samurais = _context.Samurais
+                .Where(s => s.Quotes.Any(q => q.Text.Contains(Text)))
+                .ToList();
+            printSamurais(samurais);
         }
 
         
