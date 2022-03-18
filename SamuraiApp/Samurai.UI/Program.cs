@@ -41,7 +41,9 @@ namespace SamuraiApp.UI
             // AddNewHorseToSamuraiById(2, "Scout");
             // GetAllSamuraisWithHorse();
             // GetHorsesWithSamurai();
-            QuerySamuraiBattleStats();
+            // QuerySamuraiBattleStats();
+            // QueryUsingRawSql();
+            QueryUsingRawSqlWithInterpolation("Tharle-San");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -352,6 +354,21 @@ namespace SamuraiApp.UI
             var firststat = _context.SamuraiBattleStats.FirstOrDefault();
             var tharleState = _context.SamuraiBattleStats.FirstOrDefault(sbs => sbs.Name == "Tharle-San");
             var findone = _context.SamuraiBattleStats.Find(2); // will not find, because SamuraiBattleStats is a view without PK. 
+        }
+        private static void QueryUsingRawSql()
+        {
+            var samurais = _context.Samurais
+                .FromSqlRaw("Select * from samurais")
+                .Include(s=>s.Quotes)
+                .ToList();
+        }
+
+        private static void QueryUsingRawSqlWithInterpolation(string name)
+        {
+            var samurais = _context.Samurais
+                .FromSqlInterpolated($"Select * from samurais where Name={name}")
+                .Include(s => s.Quotes)
+                .ToList();
         }
     }
 }
