@@ -40,7 +40,8 @@ namespace SamuraiApp.UI
             // AddNewSamuraiWithHorse("Jona Ujichika","Silver");
             // AddNewHorseToSamuraiById(2, "Scout");
             // GetAllSamuraisWithHorse();
-            GetHorsesWithSamurai();
+            // GetHorsesWithSamurai();
+            QuerySamuraiBattleStats();
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -344,6 +345,13 @@ namespace SamuraiApp.UI
                 .Where(s => s.Horse != null)
                 .Select(s => new { Horse = s.Horse, Samurai = s })
                 .ToList();
+        }
+        private static void QuerySamuraiBattleStats()
+        {
+            //var stats = _context.SamuraiBattleStats.ToList();
+            var firststat = _context.SamuraiBattleStats.FirstOrDefault();
+            var tharleState = _context.SamuraiBattleStats.FirstOrDefault(sbs => sbs.Name == "Tharle-San");
+            var findone = _context.SamuraiBattleStats.Find(2); // will not find, because SamuraiBattleStats is a view without PK. 
         }
     }
 }

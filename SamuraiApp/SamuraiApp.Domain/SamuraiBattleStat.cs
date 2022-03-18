@@ -9,7 +9,7 @@ namespace SamuraiApp.Domain
     public class SamuraiBattleStat
     {
         public string Name { get; set; }
-        public int? NumnerOfBattles { get; set; }
+        public int? NumberOfBattles { get; set; }
         public string EarliesBattle { get; set; }
     }
 }

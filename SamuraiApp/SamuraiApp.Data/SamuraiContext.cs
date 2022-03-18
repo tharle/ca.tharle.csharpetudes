@@ -40,7 +40,7 @@ namespace SamuraiApp.Data
                 .HasDefaultValueSql("getdate()");
 
             modelBuilder.Entity<Horse>().ToTable("Horses");
-            modelBuilder.Entity<SamuraiBattleStat>().HasNoKey();
+            modelBuilder.Entity<SamuraiBattleStat>().HasNoKey().ToView("SamuraiBattleStats");
                 
         }
     }
