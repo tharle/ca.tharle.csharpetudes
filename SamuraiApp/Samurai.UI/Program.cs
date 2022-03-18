@@ -44,7 +44,10 @@ namespace SamuraiApp.UI
             // QuerySamuraiBattleStats();
             // QueryUsingRawSql();
             // QueryUsingRawSqlWithInterpolation("Tharle-San");
-            QueryUsingFromSqlRawStoredProc();
+            // QueryUsingFromSqlRawStoredProc();
+            // AddQuoteToExistingSamuraiWhileTracked(2, "First Quota!");
+            // AddQuoteToExistingSamuraiWhileTracked(2, "Second Quota!");
+            // ExecuteSomeRawSql();
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -380,6 +383,11 @@ namespace SamuraiApp.UI
                 $"EXEC dbo.SamuraisWhoSaidAWord {text}")
                 .ToList();
             printSamurais(samurais);
+        }
+        private static void ExecuteSomeRawSql()
+        {
+            var samuraiId = 2;
+            var affected=_context.Database.ExecuteSqlRaw("EXEC DeleteQuotesForSamurai {0}", samuraiId);
         }
     }
 }
