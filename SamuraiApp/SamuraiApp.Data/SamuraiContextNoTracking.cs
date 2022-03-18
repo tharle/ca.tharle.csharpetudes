@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SamuraiApp.Data
 {
-    public class SamuraiContextNoTracking : SamuraiContext
+    public class SamuraiContextNoTracking  : SamuraiContext
     {
         public SamuraiContextNoTracking()
         {
