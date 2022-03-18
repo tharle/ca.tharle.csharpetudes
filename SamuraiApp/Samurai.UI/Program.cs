@@ -39,6 +39,8 @@ namespace SamuraiApp.UI
             // RemoveSamuraiFromABattleExplicit(10, 1);
             // AddNewSamuraiWithHorse("Jona Ujichika","Silver");
             // AddNewHorseToSamuraiById(2, "Scout");
+            // GetAllSamuraisWithHorse();
+            GetHorsesWithSamurai();
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -324,7 +326,24 @@ namespace SamuraiApp.UI
             samurai.Horse = new Horse { Name = "Trigger" };
             _context.SaveChanges(); // EF will delete the other one from de DataBase and then add the new one. 
             //Because the constraint don't permit to an Horse exist without a Samurai
+        }
+        private static void GetAllSamuraisWithHorse()
+        {
+            var samurais = _context.Samurais.Include(s => s.Horse).ToList();
+            printSamurais(samurais);
+        }
+        private static void GetHorsesWithSamurai() 
+        {
+            var horseonly = _context.Set<Horse>().Find(2);
 
+            var horseWithSamurai = _context.Samurais
+                .Include(s => s.Horse)
+                .FirstOrDefault(s => s.Horse.Id == 2);
+
+            var horseSamuraiPairs = _context.Samurais
+                .Where(s => s.Horse != null)
+                .Select(s => new { Horse = s.Horse, Samurai = s })
+                .ToList();
         }
     }
 }

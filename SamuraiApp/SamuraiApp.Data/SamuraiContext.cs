@@ -20,9 +20,9 @@ namespace SamuraiApp.Data
             optionsBuilder.UseSqlServer("Data Source= (localdb)\\MSSQLLocalDB; Initial Catalog=SamuraiAppData")
                           .LogTo(Console.WriteLine, new[]
                             {
-                              DbLoggerCategory.Database.Command.Name,
-                            }, LogLevel.Information);
-                          // .EnableSensitiveDataLogging();
+                              DbLoggerCategory.Database.Command.Name
+                            }, LogLevel.Information)
+                          .EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -37,6 +37,8 @@ namespace SamuraiApp.Data
                 )
                 .Property(bs => bs.DateJoined)
                 .HasDefaultValueSql("getdate()");
+
+            modelBuilder.Entity<Horse>().ToTable("Horses");
                 
         }
     }
