@@ -37,6 +37,8 @@ namespace SamuraiApp.UI
             // AddAllSamuraisToAllBattles();
             // RemoveSamuraiFromABattle(12, 1);
             // RemoveSamuraiFromABattleExplicit(10, 1);
+            // AddNewSamuraiWithHorse("Jona Ujichika","Silver");
+            // AddNewHorseToSamuraiById(2, "Scout");
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -291,6 +293,38 @@ namespace SamuraiApp.UI
                 _context.Remove(b_s); // _context.Set<BattleSamurai>().Remove [works, too]
                 _context.SaveChanges();
             }
+        }
+        private static void AddNewSamuraiWithHorse(string nameSamurai, string nameHorse) 
+        {
+            var samurai = new Samurai() { Name = nameSamurai };
+            samurai.Horse = new Horse() { Name = nameHorse };
+            _context.Samurais.Add(samurai);
+            _context.SaveChanges();
+        }
+        private static void AddNewHorseToSamuraiById(int idSamurai, string nameHorse)
+        {
+            var horse = new Horse { Name = nameHorse, SamuraiId = idSamurai };
+            _context.Add(horse);
+            _context.SaveChanges();
+        }
+        private static void AddNewHorseToDisconnectSamuraiObject(int idSamurai, string nameHorse)
+        {
+            var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == idSamurai);
+            samurai.Horse = new Horse { Name = "Mr Ed."};
+
+            var newContext = new SamuraiContext();
+            newContext.Samurais.Attach(samurai);
+            newContext.SaveChanges();
+        }
+        private static void ReplaceAHorse(int idSamurai, string newHorseName) 
+        {
+            var samurai = _context.Samurais
+                .Include(s => s.Horse)
+                .FirstOrDefault(s => s.Id == idSamurai);
+            samurai.Horse = new Horse { Name = "Trigger" };
+            _context.SaveChanges(); // EF will delete the other one from de DataBase and then add the new one. 
+            //Because the constraint don't permit to an Horse exist without a Samurai
+
         }
     }
 }
