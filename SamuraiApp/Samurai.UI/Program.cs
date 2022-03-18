@@ -43,7 +43,8 @@ namespace SamuraiApp.UI
             // GetHorsesWithSamurai();
             // QuerySamuraiBattleStats();
             // QueryUsingRawSql();
-            QueryUsingRawSqlWithInterpolation("Tharle-San");
+            // QueryUsingRawSqlWithInterpolation("Tharle-San");
+            QueryUsingFromSqlRawStoredProc();
             Console.WriteLine("Press any key...");
             Console.ReadLine();
         }
@@ -362,13 +363,23 @@ namespace SamuraiApp.UI
                 .Include(s=>s.Quotes)
                 .ToList();
         }
-
         private static void QueryUsingRawSqlWithInterpolation(string name)
         {
             var samurais = _context.Samurais
                 .FromSqlInterpolated($"Select * from samurais where Name={name}")
                 .Include(s => s.Quotes)
                 .ToList();
+        }
+        private static void QueryUsingFromSqlRawStoredProc()
+        {
+            var text = "you";
+            //var samurais = _context.Samurais.FromSqlRaw(
+            //    "EXEC dbo.SamuraisWhoSaidAWord {0}", text)
+            //    .ToList();
+            var samurais = _context.Samurais.FromSqlInterpolated(
+                $"EXEC dbo.SamuraisWhoSaidAWord {text}")
+                .ToList();
+            printSamurais(samurais);
         }
     }
 }
