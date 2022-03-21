@@ -9,8 +9,8 @@ namespace SamuraiApp.UI
 {
     class Program
     {
-        private static SamuraiContext _context = new SamuraiContext();
-        private static SamuraiContextNoTracking _contextNT = new SamuraiContextNoTracking();
+        private static SamuraiContext _context = new SamuraiContext(null);
+        // private static SamuraiContextNoTracking _contextNT = new SamuraiContextNoTracking();
 
         private static void Main(string[] args)
         {
@@ -75,12 +75,12 @@ namespace SamuraiApp.UI
         private static void GetSamurais(string text)
         {
             // var samurais = _context.Samurais.ToList();
-            var samurais = _contextNT.Samurais.ToList();
+            /*var samurais = _contextNT.Samurais.ToList();
             Console.WriteLine($"{text}: Samurai count is {samurais.Count}");
             foreach (var samurai in samurais)
             {
                 Console.WriteLine($"({samurai.Id}) - {samurai.Name}");
-            }
+            }*/
         }
         private static void GetSamuraisByNameLike(String name)
         {
@@ -96,15 +96,15 @@ namespace SamuraiApp.UI
         {
             // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
             //var samurai = _context.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
-            var samurai = _contextNT.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
-            Console.WriteLine(samurai.Name);
+            //var samurai = _contextNT.Samurais.FirstOrDefault(s => EF.Functions.Like(s.Name, $"{name}%"));
+            // Console.WriteLine(samurai.Name);
         }
         private static void GetSamuraiById(int idSamurai)
         {
             // var samurais = _context.Samurais.Where(s => s.Name == name).ToList();
             // var samurai = _context.Samurais.Find(idSamurai);
-            var samurai = _contextNT.Samurais.Find(idSamurai);
-            Console.WriteLine(samurai.Name);
+            //  var samurai = _contextNT.Samurais.Find(idSamurai);
+            // Console.WriteLine(samurai.Name);
         }
         private static void RetriveAndUpdateSamurai(int idSamurai, string prefixName)
         {
@@ -139,7 +139,7 @@ namespace SamuraiApp.UI
         }
         private static void QueryAndUpdateBattles_Disconnected(DateTime startDateBattle, DateTime endDateBattle) 
         {
-            List<Battle> disconnectedBattles;
+           /* List<Battle> disconnectedBattles;
             using (var context1 = new SamuraiContext())
             {
                 disconnectedBattles = _context.Battles.ToList();
@@ -154,7 +154,7 @@ namespace SamuraiApp.UI
             {
                 context2.UpdateRange(disconnectedBattles);
                 context2.SaveChanges();
-            }
+            }*/
         }
         private static void InsertNewSamuraiWithAQuote()
         {
@@ -193,10 +193,10 @@ namespace SamuraiApp.UI
         }
         private static void Simpler_AddQuoteToExistingSamuraiNotTracked(int idSamurai, string quoteText)
         {
-            var quote = new Quote { Text = quoteText, SamuraiId = idSamurai };
+            /*var quote = new Quote { Text = quoteText, SamuraiId = idSamurai };
             using var newContext = new SamuraiContext();
             newContext.Quotes.Add(quote);
-            newContext.SaveChanges();
+            newContext.SaveChanges();*/
         }
         private static void printSamurais(List<Samurai> samurais)
         {
@@ -246,10 +246,10 @@ namespace SamuraiApp.UI
             var quote = samurai.Quotes[0];
             quote.Text = newQuotaText;
 
-            using var newContext = new SamuraiContext();
+            /*using var newContext = new SamuraiContext();
             // newContext.Quotes.Update(quote); // That will make an update for all objects Related that Quota (Samurai [others samurai's quotes])
             newContext.Entry(quote).State = EntityState.Modified;// that single line will just update for that object, ignoring others relates objects in quota.
-            newContext.SaveChanges();
+            newContext.SaveChanges();*/
         }
         private static void AddingNewSamuraiToAnExistingBattle(string samuraiName)
         {
@@ -318,12 +318,12 @@ namespace SamuraiApp.UI
         }
         private static void AddNewHorseToDisconnectSamuraiObject(int idSamurai, string nameHorse)
         {
-            var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == idSamurai);
+            /*var samurai = _context.Samurais.AsNoTracking().FirstOrDefault(s => s.Id == idSamurai);
             samurai.Horse = new Horse { Name = "Mr Ed."};
 
             var newContext = new SamuraiContext();
             newContext.Samurais.Attach(samurai);
-            newContext.SaveChanges();
+            newContext.SaveChanges();*/
         }
         private static void ReplaceAHorse(int idSamurai, string newHorseName) 
         {
