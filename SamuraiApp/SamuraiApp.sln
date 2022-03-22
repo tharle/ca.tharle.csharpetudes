@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApp.UI", "Samurai.UI
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiAPI", "SamuraiAPI\SamuraiAPI.csproj", "{259A58BF-79C5-4255-B895-914D82AF251B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamuraiApp.Test", "SamuraiApp.Test\SamuraiApp.Test.csproj", "{344FBC3D-6ACB-4EA1-B368-17795B6B5449}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SamuraiApp.Test", "SamuraiApp.Test\SamuraiApp.Test.csproj", "{344FBC3D-6ACB-4EA1-B368-17795B6B5449}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
