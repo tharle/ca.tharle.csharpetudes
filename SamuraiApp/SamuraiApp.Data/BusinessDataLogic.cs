@@ -31,6 +31,12 @@ namespace SamuraiApp.Data
             return _context.SaveChanges();
         }
 
+        public int InsertSamurai(Samurai samurai)
+        {
+            _context.Samurais.Add(samurai);
+            return _context.SaveChanges();
+        }
+
 
     }
 }

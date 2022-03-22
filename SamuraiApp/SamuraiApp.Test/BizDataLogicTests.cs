@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SamuraiApp.Data;
 using SamuraiApp.Domain;
-using System.Diagnostics;
+using System.Linq;
 
 namespace SamuraiApp.Test
 {
@@ -23,6 +23,25 @@ namespace SamuraiApp.Test
             var result = bizLogic.AddSamuraiByName(nameList);
 
             Assert.AreEqual(nameList.Length, result);
+        }
+
+        [TestMethod]
+        public void CanInsertSingleSamurai()
+        {
+            var builder = new DbContextOptionsBuilder<SamuraiContext>();
+            builder.UseInMemoryDatabase("CanInsertSingleSamurai");
+
+            using (var context1 = new SamuraiContext(builder.Options))
+            {
+                var bizLogic = new BusinessDataLogic(context1);
+                bizLogic.InsertSamurai(new Samurai() { Name = "SamuraiNameTest"});
+            }
+
+            using (var context2 = new SamuraiContext(builder.Options))
+            {
+                Assert.AreEqual(1, context2.Samurais.Count());
+            }
+
         }
     }
 }
