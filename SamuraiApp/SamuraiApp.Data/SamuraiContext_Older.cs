@@ -5,8 +5,9 @@ using System;
 
 namespace SamuraiApp.Data
 {
-    public class SamuraiContext : DbContext
+    public class SamuraiContext_Older : DbContext
     {
+        public SamuraiContext_Older(DbContextOptions<SamuraiContext> options) : base(options){ }
 
         public DbSet<Samurai> Samurais { get; set; }
         public DbSet<Quote> Quotes { get; set; }
